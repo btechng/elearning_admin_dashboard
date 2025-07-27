@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -22,7 +22,7 @@ export default function Login() {
       localStorage.setItem("token", token);
 
       // ⬇ Decode token to get user ID
-      const decoded = jwt_decode(token);
+      const decoded = jwtDecode(token);
       const userId = decoded.userId;
 
       // ⬇ Fetch user details using ID
