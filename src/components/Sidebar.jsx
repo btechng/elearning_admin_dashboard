@@ -19,11 +19,11 @@ export default function Sidebar() {
     <div className="w-64 h-screen bg-gray-800 text-white p-4">
       <h2 className="text-xl font-bold mb-4">Panel</h2>
       <ul className="space-y-4">
-        <li>
+        {/* <li>
           <Link to="/" className="block hover:text-gray-300">
             Subjects
           </Link>
-        </li>
+        </li> */}
         <li>
           <Link to="/questions" className="block hover:text-gray-300">
             View Questions

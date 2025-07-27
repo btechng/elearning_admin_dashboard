@@ -12,11 +12,15 @@ const ProtectedRoute = ({ children }) => {
 };
 
 export default function App() {
-  const token = localStorage.getItem("token"); // ✅ Check login status
-  const showSidebar = Boolean(token); // ✅ Only show sidebar if logged in
+  const location = useLocation();
+  const token = localStorage.getItem("token");
+
+  // Only hide sidebar on login and signup pages
+  const hideSidebarRoutes = ["/login", "/signup"];
+  const showSidebar = token && !hideSidebarRoutes.includes(location.pathname);
 
   return (
-    <div className="flex">
+    <div className="flex min-h-screen">
       {showSidebar && <Sidebar />}
       <div className="flex-1 p-4">
         <Routes>
