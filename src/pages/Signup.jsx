@@ -14,9 +14,9 @@ export default function Signup() {
     e.preventDefault();
     try {
       await axios.post(
-        "https://elearning-backend-sdhd.onrender.com/api/auth/register",
+        "https://elearning-backend-sdhd.onrender.com/api/auth/signup",
         {
-          name, // ✅ Include name in payload
+          name,
           email,
           password,
         }
