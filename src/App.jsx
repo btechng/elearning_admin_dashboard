@@ -12,8 +12,8 @@ const ProtectedRoute = ({ children }) => {
 };
 
 export default function App() {
-  const location = useLocation();
-  const showSidebar = location.pathname !== "/login";
+  const token = localStorage.getItem("token"); // ✅ Check login status
+  const showSidebar = Boolean(token); // ✅ Only show sidebar if logged in
 
   return (
     <div className="flex">
@@ -30,7 +30,6 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-
           <Route
             path="/"
             element={
