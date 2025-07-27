@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Subjects from "./pages/Subjects";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("token");
@@ -19,6 +20,7 @@ export default function App() {
       <div className="flex-1 p-4">
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route
             path="/"
             element={

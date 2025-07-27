@@ -27,7 +27,7 @@ export default function Login() {
   return (
     <div className="flex h-screen items-center justify-center bg-gray-100">
       <div className="bg-white p-8 shadow rounded w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-4">Admin Login</h2>
+        <h2 className="text-2xl font-bold mb-4">Login</h2>
         <input
           type="email"
           name="email"
@@ -48,6 +48,12 @@ export default function Login() {
         >
           Login
         </button>
+        <p>
+          Don't have an account?{" "}
+          <a href="/signup" className="text-blue-500">
+            Sign up
+          </a>
+        </p>
       </div>
     </div>
   );
