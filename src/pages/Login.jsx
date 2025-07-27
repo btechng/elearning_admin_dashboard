@@ -1,7 +1,7 @@
-// src/pages/Login.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -17,8 +17,30 @@ export default function Login() {
         "https://elearning-backend-sdhd.onrender.com/api/auth/login",
         form
       );
-      localStorage.setItem("token", res.data.token);
-      navigate("/");
+
+      const token = res.data.token;
+      localStorage.setItem("token", token);
+
+      // ⬇ Decode token to get user ID
+      const decoded = jwt_decode(token);
+      const userId = decoded.userId;
+
+      // ⬇ Fetch user details using ID
+      const userRes = await axios.get(
+        `https://elearning-backend-sdhd.onrender.com/api/auth/user/${userId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      localStorage.setItem("user", JSON.stringify(userRes.data));
+
+      // ⬇ If admin, go to admin dashboard
+      if (userRes.data.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
     } catch (err) {
       alert("Login failed");
     }

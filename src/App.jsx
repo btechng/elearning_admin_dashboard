@@ -5,17 +5,22 @@ import Subjects from "./pages/Subjects";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Questions from "./pages/Questions";
+import AdminDashboard from "./pages/AdminDashboard";
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ children, requiredRole }) => {
   const token = localStorage.getItem("token");
-  return token ? children : <Navigate to="/login" />;
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (!token) return <Navigate to="/login" />;
+  if (requiredRole && user?.role !== requiredRole) return <Navigate to="/" />;
+
+  return children;
 };
 
 export default function App() {
   const location = useLocation();
   const token = localStorage.getItem("token");
 
-  // Only hide sidebar on login and signup pages
   const hideSidebarRoutes = ["/login", "/signup"];
   const showSidebar = token && !hideSidebarRoutes.includes(location.pathname);
 
@@ -39,6 +44,14 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <Subjects />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <AdminDashboard />
               </ProtectedRoute>
             }
           />
