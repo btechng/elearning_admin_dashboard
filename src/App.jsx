@@ -4,6 +4,7 @@ import Sidebar from "./components/Sidebar";
 import Subjects from "./pages/Subjects";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Questions from "./pages/Questions";
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("token");
@@ -21,6 +22,15 @@ export default function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/questions"
+            element={
+              <ProtectedRoute>
+                <Questions />
+              </ProtectedRoute>
+            }
+          />
+
           <Route
             path="/"
             element={
