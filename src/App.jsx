@@ -1,15 +1,32 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Subjects from "./pages/Subjects";
+import Login from "./pages/Login";
+
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem("token");
+  return token ? children : <Navigate to="/login" />;
+};
 
 export default function App() {
+  const location = useLocation();
+  const showSidebar = location.pathname !== "/login";
+
   return (
     <div className="flex">
-      <Sidebar />
-      <div className="flex-1 p-6">
+      {showSidebar && <Sidebar />}
+      <div className="flex-1 p-4">
         <Routes>
-          <Route path="/" element={<Subjects />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Subjects />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
     </div>
